@@ -1,0 +1,30 @@
+<html>
+
+    <title>myNodeServer</title>
+    <header>
+
+    </header>
+
+    <body>
+
+    </body>
+<!--引入必要的js文件-->
+<script type="text/javascript" src="http://localhost:3000/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+        //新建socket
+        var socket = io('http://localhost:3000');
+        socketdata(socket);
+
+        function socketdata() {
+            //定义接收到coins类型数据时的行为
+            socket.on('coins', function(msg){
+                console.log('接受到coins类型数据:'+msg);
+            });
+            //定义接收到trends类型数据时的行为
+            socket.on('trends', function(msg){
+                console.log('接受到trends类型数据:'+msg);
+            });
+        }
+</script>
+
+</html>
