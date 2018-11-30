@@ -41,12 +41,24 @@ io.on('connection',function(socket){
     //记录index断开时删除对应socket
     socket.on('disconnect',function(){
         iolist.splice(socket,1);
+        
     })
     //testone 为前端定义的名字
     socket.on('testone',(str) =>{
         console.log({msg:str,id:socket.id});
+        //这里只能给当前自己的socket单个用户发送消息
+        // socket.emit('getmsg',JSON.stringify({msg:str,id:socket.id}));
+        //send msg all
+        sendMsgForAll(JSON.stringify({msg:str,id:socket.id}));
     })
 })
+//给所有人发送消息
+function sendMsgForAll(msg){
+    if(iolist.length <= 0) return;
+    for (i in iolist) {
+        iolist[i].emit('getmsg', msg);
+    }
+}
 
 //数据广播 1s一次
 setInterval(function(){
